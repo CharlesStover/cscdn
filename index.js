@@ -1,4 +1,11 @@
-const http = require('http');
+const fs = require('fs');
+const https = require('https');
+
+const options = {
+  ca: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/chain.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/cert.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/privkey.pem')
+};
 
 const handler = (req, res) => {
   res.writeHead(200, {
@@ -8,6 +15,6 @@ const handler = (req, res) => {
   res.end();
 };
 
-const server = http.createServer(handler);
+const server = https.createServer(options, handler);
 
-server.listen(223);
+server.listen(443);

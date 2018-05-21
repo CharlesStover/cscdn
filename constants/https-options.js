@@ -1,19 +1,20 @@
-const prod = fs.existsSync('/etc/letsencrypt/live/cscdn.net');
+const fs = require('fs');
 
-export default {
+const letsEncrypt = fs.existsSync('/etc/letsencrypt/live/cscdn.net');
+
+module.exports = {
   ca:
-    prod ?
+    letsEncrypt ?
       fs.readFileSync('/etc/letsencrypt/live/cscdn.net/chain.pem') :
-      null
-  ),
+      null,
   cert: fs.readFileSync(
-    prod ?
+    letsEncrypt ?
       '/etc/letsencrypt/live/cscdn.net/cert.pem' :
-      '../cert/cscdn.crt'
+      './cert/cscdn.crt'
   ),
   key: fs.readFileSync(
-    prod ?
+    letsEncrypt ?
       '/etc/letsencrypt/live/cscdn.net/privkey.pem' :
-      '../cert/cscdn.key'
+      './cert/cscdn.key'
   )
 };

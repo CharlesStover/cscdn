@@ -4,13 +4,16 @@ export default {
   ca:
     prod ?
       fs.readFileSync('/etc/letsencrypt/live/cscdn.net/chain.pem') :
-      null,
-  cert:
-    prod ?
-      fs.readFileSync('/etc/letsencrypt/live/cscdn.net/cert.pem') :
-      null,
-  key:
-    prod ?
-      fs.readFileSync('/etc/letsencrypt/live/cscdn.net/privkey.pem') :
       null
+  ),
+  cert: fs.readFileSync(
+    prod ?
+      '/etc/letsencrypt/live/cscdn.net/cert.pem' :
+      '../cert/cscdn.crt'
+  ),
+  key: fs.readFileSync(
+    prod ?
+      '/etc/letsencrypt/live/cscdn.net/privkey.pem' :
+      '../cert/cscdn.key'
+  )
 };

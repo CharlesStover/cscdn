@@ -1,20 +1,18 @@
 const fs = require('fs');
 
-const letsEncrypt = fs.existsSync('/etc/letsencrypt/live/cscdn.net');
+// Production
+if (fs.existsSync('/etc/letsencrypt/live/cscdn.net')) {
+  module.exports = {
+    ca: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/chain.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/cert.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/cscdn.net/privkey.pem')
+  };
+}
 
-module.exports = {
-  ca:
-    letsEncrypt ?
-      fs.readFileSync('/etc/letsencrypt/live/cscdn.net/chain.pem') :
-      null,
-  cert: fs.readFileSync(
-    letsEncrypt ?
-      '/etc/letsencrypt/live/cscdn.net/cert.pem' :
-      './cert/cscdn.crt'
-  ),
-  key: fs.readFileSync(
-    letsEncrypt ?
-      '/etc/letsencrypt/live/cscdn.net/privkey.pem' :
-      './cert/cscdn.key'
-  )
-};
+// Development (self-signed)
+else {
+  module.exports = {
+    cert: fs.readFileSync('./cert/cscdn.crt'),
+    key: fs.readFileSync('./cert/cscdn.key')
+  };
+}

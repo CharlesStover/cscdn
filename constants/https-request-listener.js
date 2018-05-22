@@ -2,8 +2,7 @@ const fs = require('fs');
 const url = require('url');
 const withSecurity = require('./with-security');
 
-// TODO: Use Express?
-module.exports = withSecurity((request, response) => {
+const requestListener = (request, response) => {
   const requestUrl = url.parse(request.url);
   switch (requestUrl.pathname) {
 
@@ -24,4 +23,6 @@ module.exports = withSecurity((request, response) => {
       break;
   }
   response.end();
-});
+};
+
+module.exports = withSecurity(requestListener);

@@ -1,16 +1,21 @@
 const contentSecurityPolicy = `\
+block-all-mixed-content; \
 connect-src 'none'; \
 default-src 'none'; \
 font-src 'none'; \
 form-action 'none'; \
+frame-ancestors 'none'; \
 frame-src 'none'; \
 img-src 'none'; \
+manifest-src 'none'; \
 media-src 'none'; \
 object-src 'none'; \
 report-to 'csp-enforce'; \
 report-uri 'https://cscdn.report-uri.com/r/d/csp/enforce'; \
+require-sri-for script style; \
 script-src 'none'; \
-style-src 'none'\
+style-src 'none'; \
+worker-src 'none'\
 `;
 
 const reportTo = [
